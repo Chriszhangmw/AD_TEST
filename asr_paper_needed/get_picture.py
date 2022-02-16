@@ -77,7 +77,7 @@ def displaySpectrogram(path):
     # load data
     rate, data = wavfile.read(path)
     # perform noise reduction
-    reduced_noise = nr.reduce_noise(y=data, sr=rate, n_std_thresh_stationary=1.5,stationary=True)
+    # reduced_noise = nr.reduce_noise(y=data, sr=rate, n_std_thresh_stationary=1.5,stationary=True)
     x, sr = librosa.load( path, sr=16000)
 
     # compute power spectrogram with stft(short-time fourier transform):
@@ -87,7 +87,7 @@ def displaySpectrogram(path):
     # show
     librosa.display.specshow(spectrogram, y_axis='log')
     plt.colorbar(format='%+2.0f dB')
-    plt.title('Logarithmic Spectrogram of Speech Signal')
+    plt.title('Non-Elderlies Spectrogram')
     plt.xlabel('Duration (seconds)')
     plt.ylabel('Frequency (Hz)')
     plt.show()
@@ -95,7 +95,7 @@ def displaySpectrogram(path):
 
 if __name__ == '__main__':
     # path = "./A11_0.wav"
-    path = "./A/A/A005.wav"
-    displayWaveform(path)
-    displaySpectrum(path)
+    path = "./test/A11_129.wav"
+    # displayWaveform(path)
+    # displaySpectrum(path)
     displaySpectrogram(path)

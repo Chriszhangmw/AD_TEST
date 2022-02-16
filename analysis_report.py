@@ -197,6 +197,9 @@ def get_report(dic1,dic2,masr_dic):
                     for answer in answer_list:
                         if_right = compute(answer,predict_text,tool)
                         if_right_iflytek = compute(answer, iFlyTek_text, tool)
+                        if if_right:
+                            if if_right_iflytek is False:
+                                print(iFlyTek_text, "---->", predictions2[catalog])
                         if if_right_iflytek:
                             answer_iflytek_ += 1
                         if if_right:
@@ -213,6 +216,9 @@ def get_report(dic1,dic2,masr_dic):
                 else:
                     if_right = compute(text, predict_text, tool)
                     if_right_iflytek = compute(text, iFlyTek_text, tool)
+                    if if_right:
+                        if if_right_iflytek is False:
+                            print(iFlyTek_text,"---->",predictions2[catalog])
                     if if_right_iflytek:
                         answer_iflytek_ += 1
                     if if_right:
@@ -299,9 +305,12 @@ def get_report(dic1,dic2,masr_dic):
 
     report["accurcy"] = float(all_right/all_question)
     report["总共有效question"] = int(all_question)
-    print(answer_list2,answer_iflytek,answer_ensemble)
-    dram_line_comprason(total_right_questions, answer_iflytek, ensemble)
-    with open('./data/lianhe_20211227.json', 'w', encoding='utf-8') as f:
+    # print(answer_list2,answer_iflytek,answer_ensemble)
+    print(total_right_questions)
+    print(answer_iflytek)
+    print(ensemble)
+    dram_line_comprason(answer_list2, answer_iflytek, ensemble)
+    with open('./dialect_clinical/lianhe_20211227.json', 'w', encoding='utf-8') as f:
         json.dump(report, f, indent=2, sort_keys=True, ensure_ascii=False)
 
 
@@ -412,17 +421,17 @@ def get_report2(dic1,dic2):
 
     report["accurcy"] = float(all_right/all_question)
     report["总共有效question"] = int(all_question)
-    with open('./data/report_yuyinzhuanxie.json', 'w', encoding='utf-8') as f:
+    with open('./dialect_clinical/report_yuyinzhuanxie.json', 'w', encoding='utf-8') as f:
         json.dump(report, f, indent=2, sort_keys=True, ensure_ascii=False)
 
 if __name__ == "__main__":
     # tool = PinyinSimilarity()
     # res = tool.pinyin_similarity("九十嗯嗯嗯三","九十三")
     # print(res)
-    path = './data/answer_bak.json'
+    path = './dialect_clinical/answer_bak.json'
     answer_dic = get_dic(path)
-    masr_dic = get_dic("./data/asr_20121227.json")
-    xunfei_dic = get_dic("./data/asr_yuyinzhuanxie.json")
+    masr_dic = get_dic("./dialect_clinical/asr_20121227.json")
+    xunfei_dic = get_dic("./dialect_clinical/asr_yuyinzhuanxie.json")
     get_report(answer_dic, xunfei_dic,masr_dic)
     # get_report2(answer_dic, xunfei_dic)
 

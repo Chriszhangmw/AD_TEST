@@ -4,7 +4,7 @@ import json
 # with open('./kedaxunfei.json', 'r', encoding='utf-8') as f:
 #     dic = json.load(f)
 
-with open('./data/lianhe_20211227.json', 'r', encoding='utf-8') as f:
+with open('./dialect_normal/report_yuyinzhuanxie.json', 'r', encoding='utf-8') as f:
     dic = json.load(f)
 all_cata = ["area","city","compute",
             "day","floor","immediateMemory",
