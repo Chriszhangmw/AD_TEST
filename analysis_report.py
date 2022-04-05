@@ -1,26 +1,29 @@
 
 import json
+
+import numpy
 from pypinyin import lazy_pinyin
 import matplotlib.pyplot as plt
+import numpy as np
 
 
-
-def dram_line_comprason(total_right_questions,answer_iflytek,answer_ensemble):
-    plt.title('MMSE Score Line Chart')
+def dram_line_comprason(answer_iflytek,answer_ensemble,total_right_questions):
+    plt.title('C-MMSE Question Consistency Curve')
     x_axix = [i for i in range(40)]
     plt.fill_between(x_axix, answer_iflytek, answer_ensemble, color='green', alpha=0.25)
-    plt.plot(x_axix, total_right_questions, color='green', label='MMSE Score', linestyle=':', linewidth=1,
+    # plt.fill_between(x_axix, total_right_questions, answer_ensemble, color='red', alpha=0.25)
+    plt.plot(x_axix, total_right_questions, color='green', label='Valid Questions', linestyle=':', linewidth=1,
              marker='o', markersize=5,
              markeredgecolor='black', markerfacecolor='C0')
     plt.plot(x_axix, answer_iflytek, color='red', label='iFkytek', linestyle='--', linewidth=1,
              marker='*', markersize=5,
              markeredgecolor='black', markerfacecolor='C3')
-    plt.plot(x_axix, answer_ensemble, color='blue', label='Proposed-Model', linestyle='-.', linewidth=1,
+    plt.plot(x_axix, answer_ensemble, color='blue', label='Proposed Model', linestyle='-.', linewidth=1,
              marker='v', markersize=5,
              markeredgecolor='black', markerfacecolor='C2')
     plt.legend()  # 显示图例
     plt.xlabel('Patients')
-    plt.ylabel('Score')
+    plt.ylabel('Question Number')
     plt.show()
 
 
@@ -163,153 +166,217 @@ def compute(answer,text2,tool):
             if_right = True
     return if_right
 
+def decrease_badlist(compute_number_bad,wrong_catalog,type):
+    assert compute_number_bad>0
+    num1 = compute_number_bad
+    num2 = wrong_catalog.count(type)
+    # if type == "compute":
+    if wrong_catalog.count(type) == 0:
+        return wrong_catalog,0
+    elif wrong_catalog.count(type)>0 and wrong_catalog.count(type) < compute_number_bad:
+        while wrong_catalog.count(type) > 0:
+            wrong_catalog.remove(type)
+        return wrong_catalog,num2
+    else: #wrong_catalog.count(type) >= compute_number_bad
+        while compute_number_bad > 0:
+            wrong_catalog.remove(type)
+            compute_number_bad -= 1
+        return wrong_catalog, num1
+
+def decrease_wronglist(compute_number_wrong,wrong_catalog,type):
+    assert compute_number_wrong>0
+    num1 = compute_number_wrong
+    num2 = wrong_catalog.count(type)
+    # if type == "compute":
+    if wrong_catalog.count(type) == 0:
+        return wrong_catalog,0
+    elif wrong_catalog.count(type)>0 and wrong_catalog.count(type) < compute_number_wrong:
+        while wrong_catalog.count(type) > 0:
+            wrong_catalog.remove(type)
+        return wrong_catalog,num2
+    else: #wrong_catalog.count(type) >= compute_number_bad
+        while compute_number_wrong > 0:
+            wrong_catalog.remove(type)
+            compute_number_wrong -= 1
+        return wrong_catalog, num1
+
+
+
 
 def get_report(dic1,dic2,masr_dic):
     tool = PinyinSimilarity()
-    # res = tool.pinyin_similarity("重庆市的沙评吧区", "沙坪坝")
     report = {}
     all_question  =0
-    all_right = 0
-    answer_list2 = []
-    total_right_questions = []
-    iflytek = []
-    ensemble = []
-    answer_iflytek, answer_ensemble = [],[]
+    all_right_emsemble = 0
+    all_right_iflytek = 0
     multi_catalog = ["compute","immediateMemory","lateMemory"]
+    answer_iflytek = []
+    answer_ensemble = []
+    scores = []
+    total_questions = []
     for k,v in dic1.items():#answer
         #prediction
         report_detail = {}
-        total_question = 0
-        predict_right_question = 0
-        predictions = dic2[k]
-        predictions2 = masr_dic[k]
-        wrong_catalog = []
-        answer_list2.append(v['score'])
+        predictions = dic2[k] #科大讯飞的
+        predictions2 = masr_dic[k]  # gate CNN的
+        wrong_catalog_iflytek = []  # 科大讯飞哪些预测错了的
+        wrong_catalog_ensemble = []  # 集成模型哪些预测错了的
         answer_iflytek_ = 0
         answer_ensemble_ = 0
+        score = v["score"]
+        scores.append(score)
+        bad_wav = v["bad_wav"]
+        wrong_answer = v["wrong_answer"]
+        total_question = 24 - len(bad_wav)
+        total_questions.append(total_question)
+        all_question += total_question
         for catalog,text in v.items():
-            if catalog != 'score' and catalog != 'bad_wav' and catalog != 'wrong_answer':
+            if catalog not in multi_catalog:#先不考虑存在多个答案的情况
+                if catalog not in bad_wav:#保证bad音频里的就不听了，不参与判断
+                    if catalog not in wrong_answer:
+                        if catalog != 'score' and catalog != 'bad_wav' and catalog != 'wrong_answer':
+                            iFlyTek_text = predictions[catalog]
+                            predict_text = predictions[catalog]
+                            predict_text += predictions2[catalog]
+                            if_right = compute(text, predict_text, tool)
+                            if_right_iflytek = compute(text, iFlyTek_text, tool)
+                            if if_right:
+                                if if_right_iflytek is False:
+                                    print(iFlyTek_text,"---->",predictions2[catalog])
+                            if if_right_iflytek:
+                                answer_iflytek_ += 1
+                            else:
+                                wrong_catalog_iflytek.append(catalog)
+                            if if_right:
+                                answer_ensemble_ += 1
+                            else:
+                                wrong_catalog_ensemble.append(catalog)
+        #开始计算multi_catalog中的三个奇葩
+        for catalog, text in v.items():
+            if catalog == "compute":
                 iFlyTek_text = predictions[catalog]
                 predict_text = predictions[catalog]
                 predict_text += predictions2[catalog]
-                if ',' in text:#表示一段音频实际对应了多个答案
-                    answer_list = text.split(',')
-                    for answer in answer_list:
-                        if_right = compute(answer,predict_text,tool)
-                        if_right_iflytek = compute(answer, iFlyTek_text, tool)
-                        if if_right:
-                            if if_right_iflytek is False:
-                                print(iFlyTek_text, "---->", predictions2[catalog])
-                        if if_right_iflytek:
-                            answer_iflytek_ += 1
-                        if if_right:
-                            predict_right_question += 1
-                            total_question += 1
-                            all_question += 1
-                            all_right += 1
-                            answer_ensemble_ += 1
-                            # answer_iflytek_ += 1
-                        else:
-                            total_question += 1
-                            all_question += 1
-                            wrong_catalog.append(catalog)
-                else:
-                    if_right = compute(text, predict_text, tool)
-                    if_right_iflytek = compute(text, iFlyTek_text, tool)
+                answer_list = text.split(',')
+                for answer in answer_list:
+                    if_right = compute(answer, predict_text, tool)
+                    if_right_iflytek = compute(answer, iFlyTek_text, tool)
                     if if_right:
                         if if_right_iflytek is False:
-                            print(iFlyTek_text,"---->",predictions2[catalog])
+                            print(iFlyTek_text, "---->", predictions2[catalog])
                     if if_right_iflytek:
                         answer_iflytek_ += 1
-                    if if_right:
-                        predict_right_question += 1
-                        total_question += 1
-                        all_question += 1
-                        all_right += 1
-                        answer_ensemble_ += 1
-                        # answer_iflytek_ += 1
                     else:
-                        all_question += 1
-                        total_question += 1
-                        wrong_catalog.append(catalog)
-        bad_wav = v["bad_wav"]
-        wrong_answer = v["wrong_answer"]
-        for catalog, _ in v.items():
-            if catalog == "compute":
-                compute_list = ["compute","compute","compute","compute","compute"]
-                for c in compute_list:
-                    if c in bad_wav:
-                        if c in wrong_catalog:
-                            wrong_catalog.remove(c)
-                            all_question -= 1
-                            total_question -= 1
-                    if c in wrong_answer:
-                        if c in wrong_catalog:
-                            wrong_catalog.remove(c)
-                            predict_right_question += 1
-                            all_right += 1
-                            answer_iflytek_ += 1
-                            # answer_ensemble_ += 1
-                            # answer_iflytek_ += 1
+                        wrong_catalog_iflytek.append(catalog)
+                    if if_right:
+                        answer_ensemble_ += 1
+                    else:
+                        wrong_catalog_ensemble.append(catalog)
+                if bad_wav.count("compute")>0:
+                    compute_number_bad = bad_wav.count("compute")
+                    wrong_catalog_ensemble,_ = decrease_badlist(compute_number_bad, wrong_catalog_ensemble, "compute")
+                    wrong_catalog_iflytek, _ = decrease_badlist(compute_number_bad, wrong_catalog_iflytek,
+                                                                         "compute")
+                    # answer_iflytek_ += num_right
+                    # answer_ensemble_ += num_right
+                if wrong_answer.count("compute")>0:
+                    compute_number_wrong = wrong_answer.count("compute")
+                    wrong_catalog_ensemble,num_right1 = decrease_wronglist(compute_number_wrong, wrong_catalog_ensemble, "compute")
+                    wrong_catalog_iflytek, num_right2 = decrease_wronglist(compute_number_wrong, wrong_catalog_iflytek,
+                                                                         "compute")
+                    answer_iflytek_ += num_right2
+                    answer_ensemble_ += num_right1
             elif catalog == "immediateMemory":
-                immediateMemory_list = ["immediateMemory","immediateMemory","immediateMemory"]
-                for c in immediateMemory_list:
-                    if c in bad_wav:
-                        if c in wrong_catalog:
-                            wrong_catalog.remove(c)
-                            all_question -= 1
-                            total_question -= 1
-                    if c in wrong_answer:
-                        if c in wrong_catalog:
-                            wrong_catalog.remove(c)
-                            predict_right_question += 1
-                            all_right += 1
-                            answer_iflytek_ += 1
-            elif catalog == "lateMemory":
-                lateMemory_list = ["lateMemory","lateMemory","lateMemory"]
-                for c in lateMemory_list:
-                    if c in bad_wav:
-                        if c in wrong_catalog:
-                            wrong_catalog.remove(c)
-                            all_question -= 1
-                            total_question -= 1
-                    if c in wrong_answer:
-                        if c in wrong_catalog:
-                            wrong_catalog.remove(c)
-                            predict_right_question += 1
-                            all_right += 1
-                            # answer_ensemble_ += 1
-                            answer_iflytek_ += 1
-            else:
-                if catalog in bad_wav:
-                    if catalog in wrong_catalog:
-                        wrong_catalog.remove(catalog)
-                        all_question -= 1
-                        total_question -= 1
-                if catalog in wrong_answer:
-                    if catalog in wrong_catalog:
-                        wrong_catalog.remove(catalog)
-                        predict_right_question += 1
-                        all_right += 1
-                        # answer_ensemble_ += 1
+                iFlyTek_text = predictions[catalog]
+                predict_text = predictions[catalog]
+                predict_text += predictions2[catalog]
+                answer_list = text.split(',')
+                for answer in answer_list:
+                    if_right = compute(answer, predict_text, tool)
+                    if_right_iflytek = compute(answer, iFlyTek_text, tool)
+                    if if_right:
+                        if if_right_iflytek is False:
+                            print(iFlyTek_text, "---->", predictions2[catalog])
+                    if if_right_iflytek:
                         answer_iflytek_ += 1
-        answer_iflytek.append(answer_iflytek_)
-        answer_ensemble.append(answer_ensemble_)
-        report_detail["总的问题个数："] = total_question
-        total_right_questions.append(total_question)
-        report_detail["预测正确问题个数："] = predict_right_question
-        ensemble.append(predict_right_question)
-        report_detail["预测错误问题个数："] = total_question - predict_right_question
-        report_detail["哪些问题预测错了："] = ' '.join(wrong_catalog)
-        report[k] = report_detail
+                    else:
+                        wrong_catalog_iflytek.append(catalog)
+                    if if_right:
+                        answer_ensemble_ += 1
+                    else:
+                        wrong_catalog_ensemble.append(catalog)
+                if bad_wav.count("immediateMemory") > 0:
+                    compute_number_bad = bad_wav.count("immediateMemory")
+                    wrong_catalog_ensemble, num_right = decrease_badlist(compute_number_bad, wrong_catalog_ensemble, "immediateMemory")
+                    wrong_catalog_iflytek, num_right = decrease_badlist(compute_number_bad, wrong_catalog_iflytek,
+                                                                         "immediateMemory")
+                    # answer_iflytek_ += num_right
+                    # answer_ensemble_ += num_right
+                if wrong_answer.count("immediateMemory")>0:
+                    compute_number_wrong = wrong_answer.count("immediateMemory")
+                    wrong_catalog_ensemble,num_right1 = decrease_wronglist(compute_number_wrong, wrong_catalog_ensemble, "immediateMemory")
+                    wrong_catalog_iflytek, num_right2 = decrease_wronglist(compute_number_wrong,
+                                                                            wrong_catalog_iflytek, "immediateMemory")
+                    answer_iflytek_ += num_right2
+                    answer_ensemble_ += num_right1
+            elif catalog == "lateMemory":
+                iFlyTek_text = predictions[catalog]
+                predict_text = predictions[catalog]
+                predict_text += predictions2[catalog]
+                answer_list = text.split(',')
+                for answer in answer_list:
+                    if_right = compute(answer, predict_text, tool)
+                    if_right_iflytek = compute(answer, iFlyTek_text, tool)
+                    if if_right:
+                        if if_right_iflytek is False:
+                            print(iFlyTek_text, "---->", predictions2[catalog])
+                    if if_right_iflytek:
+                        answer_iflytek_ += 1
+                    else:
+                        wrong_catalog_iflytek.append(catalog)
+                    if if_right:
+                        answer_ensemble_ += 1
+                    else:
+                        wrong_catalog_ensemble.append(catalog)
+                if bad_wav.count("lateMemory") > 0:
+                    compute_number_bad = bad_wav.count("lateMemory")
+                    wrong_catalog_ensemble, num_right = decrease_badlist(compute_number_bad, wrong_catalog_ensemble, "lateMemory")
 
-    report["accurcy"] = float(all_right/all_question)
+                    wrong_catalog_iflytek, num_right = decrease_badlist(compute_number_bad, wrong_catalog_iflytek,
+                                                                         "lateMemory")
+                    # answer_iflytek_ += num_right
+                    # answer_ensemble_ += num_right
+                if wrong_answer.count("lateMemory")>0:
+                    compute_number_wrong = wrong_answer.count("lateMemory")
+                    wrong_catalog_ensemble,num_right1 = decrease_wronglist(compute_number_wrong, wrong_catalog_ensemble, "lateMemory")
+                    wrong_catalog_iflytek, num_right2 = decrease_wronglist(compute_number_wrong,
+                                                                            wrong_catalog_iflytek, "lateMemory")
+                    answer_iflytek_ += num_right2
+                    answer_ensemble_ += num_right1
+
+        iflytek_rignt_number = total_question - len(wrong_catalog_iflytek)
+        ensemble_right_number = total_question - len(wrong_catalog_ensemble)
+        answer_iflytek.append(iflytek_rignt_number)
+        answer_ensemble.append(ensemble_right_number)
+        report_detail["总的问题个数："] = total_question
+        report_detail["ensemble预测正确问题个数："] = ensemble_right_number
+        report_detail["iflytek预测正确问题个数："] = iflytek_rignt_number
+        report_detail["ensemble预测错误问题个数："] = len(wrong_catalog_ensemble)
+        report_detail["iflytek预测错误问题个数："] = len(wrong_catalog_iflytek)
+        report_detail["ensemble哪些问题预测错了："] = ' '.join(wrong_catalog_ensemble)
+        report_detail["iflytek哪些问题预测错了："] = ' '.join(wrong_catalog_iflytek)
+
+        report[k] = report_detail
+        all_right_emsemble += ensemble_right_number
+        all_right_iflytek += iflytek_rignt_number
+    report["emsemble accurcy"] = float(all_right_emsemble / all_question)
+    report["iflytek accurcy"] = float(all_right_iflytek/all_question)
     report["总共有效question"] = int(all_question)
-    # print(answer_list2,answer_iflytek,answer_ensemble)
-    print(total_right_questions)
+    print(total_questions)
+    print(scores)
     print(answer_iflytek)
-    print(ensemble)
-    dram_line_comprason(answer_list2, answer_iflytek, ensemble)
+    print(answer_ensemble)
+    dram_line_comprason(answer_iflytek, answer_ensemble,total_questions)
     with open('./dialect_clinical/lianhe_20211227.json', 'w', encoding='utf-8') as f:
         json.dump(report, f, indent=2, sort_keys=True, ensure_ascii=False)
 
@@ -330,8 +397,8 @@ def get_report2(dic1,dic2):
         predict_right_question = 0
         predictions = dic2[k]
         wrong_catalog = []
-        bad_wav = v["bad_wav"]
-        wrong_answer = v["wrong_answer"]
+        # bad_wav = v["bad_wav"]
+        # wrong_answer = v["wrong_answer"]
         for catalog,text in v.items():
             if catalog != 'score' and catalog != 'bad_wav' and catalog != 'wrong_answer':
                 predict_text = predictions[catalog]
@@ -425,9 +492,6 @@ def get_report2(dic1,dic2):
         json.dump(report, f, indent=2, sort_keys=True, ensure_ascii=False)
 
 if __name__ == "__main__":
-    # tool = PinyinSimilarity()
-    # res = tool.pinyin_similarity("九十嗯嗯嗯三","九十三")
-    # print(res)
     path = './dialect_clinical/answer_bak.json'
     answer_dic = get_dic(path)
     masr_dic = get_dic("./dialect_clinical/asr_20121227.json")

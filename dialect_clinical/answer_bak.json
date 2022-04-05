@@ -248,7 +248,7 @@
     "week": "三||3",
     "year": "二零二一||二一||2021||21",
 	"score":26,
-     "bad_wav": [""],
+     "bad_wav": [],
     "wrong_answer":["area","compute","immediateMemory","lateMemory","reason"]
   },
      "袁春燕": {
@@ -269,7 +269,7 @@
     "week": "五||5",
     "year": "二零二一||二一||2021||21",
 	"score":23,
-       "bad_wav": [""],
+       "bad_wav": [],
     "wrong_answer":["compute","day","month","reason","week"]
   },
    "陈漫翔": {

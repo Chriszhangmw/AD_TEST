@@ -1,9 +1,12 @@
-# -*- coding: utf-8 -*-
-#
-#   author: yanmeng2
-#
-# 非实时转写调用demo
-
+import torch
+from models.conv import GatedConv
+import os
+import json
+import hashlib
+import base64
+import hmac
+import json
+import os
 import base64
 import hashlib
 import hmac
@@ -29,10 +32,10 @@ file_piece_sice = 10485760
 # 转写类型
 lfasr_type = 0
 # 是否开启分词
-has_participle = 'true'
+has_participle = 'false'
 has_seperate = 'true'
 # 多候选词个数
-max_alternatives = 5
+max_alternatives = 0
 # 子用户标识
 suid = ''
 
@@ -56,7 +59,6 @@ class SliceIdGenerator:
                 j = j - 1
         self.__ch = ch
         return self.__ch
-
 
 class RequestApi(object):
     def __init__(self, appid, secret_key, upload_file_path):
@@ -88,41 +90,34 @@ class RequestApi(object):
             param_dict['app_id'] = appid
             param_dict['signa'] = signa
             param_dict['ts'] = ts
-            param_dict['max_alternatives'] = 5
-            param_dict['has_participle'] = "true"
-            param_dict['has_seperate'] = "true"
-
             param_dict['file_len'] = str(file_len)
             param_dict['file_name'] = file_name
             param_dict['slice_num'] = str(slice_num)
-            param_dict["language"] = "cn_xinanese"
-
+            # param_dict["language"] = "cn_xinanese"
+            param_dict["language"] = "cn"
         elif apiname == api_upload:
             param_dict['app_id'] = appid
             param_dict['signa'] = signa
             param_dict['ts'] = ts
-            param_dict['max_alternatives'] = 5
-            param_dict['has_participle'] = "true"
-            param_dict['has_seperate'] = "true"
             param_dict['task_id'] = taskid
             param_dict['slice_id'] = slice_id
+            # param_dict["language"] = "cn_xinanese"
+            param_dict["language"] = "cn"
         elif apiname == api_merge:
             param_dict['app_id'] = appid
             param_dict['signa'] = signa
             param_dict['ts'] = ts
-            param_dict['max_alternatives'] = 5
-            param_dict['has_participle'] = "true"
-            param_dict['has_seperate'] = "true"
             param_dict['task_id'] = taskid
             param_dict['file_name'] = file_name
+            # param_dict["language"] = "cn_xinanese"
+            param_dict["language"] = "cn"
         elif apiname == api_get_progress or apiname == api_get_result:
             param_dict['app_id'] = appid
             param_dict['signa'] = signa
             param_dict['ts'] = ts
-            param_dict['max_alternatives'] = 5
-            param_dict['has_participle'] = "true"
-            param_dict['has_seperate'] = "true"
             param_dict['task_id'] = taskid
+            # param_dict["language"] = "cn_xinanese"
+            param_dict["language"] = "cn"
         return param_dict
 
     # 请求和结果解析，结果中各个字段的含义可参考：https://doc.xfyun.cn/rest_api/%E8%AF%AD%E9%9F%B3%E8%BD%AC%E5%86%99.html
@@ -218,16 +213,83 @@ class RequestApi(object):
             if len(res_list) > 0:
                 for r in res_list:
                     string = r['onebest']
-                    print(f"wordsResultList: ",r["wordsResultList"])
-                    # print(f"alternativeList: ",r["alternativeList"])
-                    # print(f"wordsName: ",r["wordsName"])
                     text += string
         text = text.replace('。','')
         text = text.replace('，', '')
         return text
 
-if __name__ == '__main__':
+
+def audio_to_text(AudioFile):
     api = RequestApi(appid="6d0c56ed", secret_key="4df5aa42d4916b14ed988b7597535542",
-                     upload_file_path=r"./test_temp/曾玉静-msr-2021-04-13T03-05-51-963Zyear.wav")
+                     upload_file_path=AudioFile)
     res = api.all_api_request()
-    print('res:',res)
+    return res
+
+def get_test_by_mase(path):
+    model = GatedConv.load("/home/zmw/big_space/zhangmeiwei_space/asr_res_model/masr/ad/model_best_drop2_a0.1.pth")
+    device = torch.device("cuda:3")
+    torch.cuda.set_device(device)
+    total_num = 0
+    catalog_num = 0
+    text_dic = {}
+    dirs = os.listdir(path)
+    for dir in dirs:
+        patient_catalog = {}
+        patient_name = str(dir)
+        child_path = os.path.join(path,dir)
+        child_files = os.listdir(child_path)
+        for file in child_files:
+            if file.endswith('wav'):
+                total_num += 1
+                file_catalogs = str(file).replace('.wav','')
+                file_catalogs = file_catalogs.split('Z')
+                catalog = file_catalogs[1]
+                print(catalog)
+                catalog_num+=1
+                read_path = os.path.join(child_path,file)
+                text = model.predict(read_path)
+                print(text)
+                patient_catalog[catalog] = text
+        text_dic[patient_name] = patient_catalog
+    print("total sample :",total_num,catalog_num)
+    with open('./mmse/asr_20121227.json','w',encoding='utf-8') as f:
+        json.dump(text_dic,f,indent=2,sort_keys=True,ensure_ascii=False)
+
+def get_test_by_kedaxunfei(path):
+    total_num = 0
+    catalog_num = 0
+    text_dic = {}
+    dirs = os.listdir(path)
+    for dir in dirs:
+        patient_catalog = {}
+        patient_name = str(dir)
+        child_path = os.path.join(path,dir)
+        child_files = os.listdir(child_path)
+        for file in child_files:
+            if file.endswith('wav'):
+                total_num += 1
+                file_catalogs = str(file).replace('.wav','')
+                file_catalogs = file_catalogs.split('Z')
+                catalog = file_catalogs[1]
+                print(catalog)
+                catalog_num+=1
+                read_path = os.path.join(child_path,file)
+                text = audio_to_text(read_path)
+                print(text)
+                patient_catalog[catalog] = text
+        text_dic[patient_name] = patient_catalog
+    print("total sample :",total_num,catalog_num)
+    with open('./mmse/normal_putonghua_0217.json','w',encoding='utf-8') as f:
+        json.dump(text_dic,f,indent=2,sort_keys=True,ensure_ascii=False)
+
+if __name__ == '__main__':
+    path = '/home/zmw/big_space/zhangmeiwei_space/AD_TEST/normal_putonghua/2022.02.17'
+    get_test_by_kedaxunfei(path)
+
+
+
+
+
+
+
+
