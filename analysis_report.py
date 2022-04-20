@@ -30,8 +30,13 @@ def dram_line_comprason(answer_iflytek,answer_ensemble,total_right_questions):
 
 
 
-
+from hmm_correction import ModelLanguage
 class PinyinSimilarity:
+
+    def __init__(self):
+        self.ml = ModelLanguage('./hmm/model_language')
+        self.ml.LoadModel()
+
 
     def _match_not_continue(self,str_input_pinyin,answer_pinyin):
         match = True
@@ -39,6 +44,19 @@ class PinyinSimilarity:
             if pinying not in str_input_pinyin:
                 return False
         return match
+
+    def match(self,str_input,answer):
+        #答案太长了，解码时间比较慢，建议分词之后去搜索，然后再合并
+        if self.pinyin_similarity(str_input,answer):
+            return True
+        else:
+            str_pinyin = lazy_pinyin(str_input)
+            try:
+                r = self.ml.SpeechToText(str_pinyin)
+                return self.pinyin_similarity(r,answer)
+            except:
+                return False
+
     def pinyin_similarity(self, str_input,answer):
         self.answer_hanzi = answer
         self.answer_pinyin = lazy_pinyin(answer)
@@ -159,10 +177,12 @@ def compute(answer,text2,tool):
     if "||" in answer:  # 一个问题，可能有多个答案的
         textList = answer.split('||')
         for t in textList:
-            if tool.pinyin_similarity(text2, t):
+            # if tool.pinyin_similarity(text2, t): #不加HMM做纠正
+            if tool.match(text2,t):
                 if_right = True
     else:
-        if tool.pinyin_similarity(text2, answer):
+        # if tool.pinyin_similarity(text2, answer):
+        if tool.match(text2, answer):
             if_right = True
     return if_right
 
@@ -381,7 +401,7 @@ def get_report(dic1,dic2,masr_dic):
         json.dump(report, f, indent=2, sort_keys=True, ensure_ascii=False)
 
 
-
+from tqdm import tqdm
 def get_report2(dic1,dic2):
     tool = PinyinSimilarity()
     # res = tool.pinyin_similarity("重庆市的沙评吧区", "沙坪坝")
@@ -389,7 +409,7 @@ def get_report2(dic1,dic2):
     all_question  =0
     all_right = 0
 
-    for k,v in dic1.items():#answer
+    for k,v in tqdm(dic1.items()):#answer
         #prediction
 
         report_detail = {}
@@ -399,7 +419,8 @@ def get_report2(dic1,dic2):
         wrong_catalog = []
         # bad_wav = v["bad_wav"]
         # wrong_answer = v["wrong_answer"]
-        for catalog,text in v.items():
+        for catalog,text in tqdm(v.items()):
+            print(k,catalog)
             if catalog != 'score' and catalog != 'bad_wav' and catalog != 'wrong_answer':
                 predict_text = predictions[catalog]
                 if ',' in text:#表示一段音频实际对应了多个答案
@@ -488,15 +509,35 @@ def get_report2(dic1,dic2):
 
     report["accurcy"] = float(all_right/all_question)
     report["总共有效question"] = int(all_question)
-    with open('./dialect_clinical/report_yuyinzhuanxie.json', 'w', encoding='utf-8') as f:
+    with open('dialect_normal/report_yuyinzhuanxie_hmm.json', 'w', encoding='utf-8') as f:
         json.dump(report, f, indent=2, sort_keys=True, ensure_ascii=False)
 
 if __name__ == "__main__":
-    path = './dialect_clinical/answer_bak.json'
-    answer_dic = get_dic(path)
-    masr_dic = get_dic("./dialect_clinical/asr_20121227.json")
-    xunfei_dic = get_dic("./dialect_clinical/asr_yuyinzhuanxie.json")
-    get_report(answer_dic, xunfei_dic,masr_dic)
+    '''
+    dialect_clinical
+    '''
+    # path = './dialect_clinical/answer_bak.json'
+    # answer_dic = get_dic(path)
+    # masr_dic = get_dic("./dialect_clinical/asr_20121227.json")
+    # xunfei_dic = get_dic("./dialect_clinical/asr_yuyinzhuanxie.json")
+    # get_report(answer_dic, xunfei_dic,masr_dic)
     # get_report2(answer_dic, xunfei_dic)
 
+    '''
+    mandarin_normal
+    '''
+    # path = './mandarin_normal/answer.json'
+    # answer_dic = get_dic(path)
+    # xunfei_dic = get_dic("./mandarin_normal/iflytek.json")
+    # get_report2(answer_dic, xunfei_dic)
+
+    '''
+    dialect_normal
+    '''
+    path = './dialect_normal/answer.json'
+    answer_dic = get_dic(path)
+    # masr_dic = get_dic("./dialect_normal/asr_20121227.json")
+    xunfei_dic = get_dic("./dialect_normal/iflytek.json")
+    # get_report(answer_dic, xunfei_dic, masr_dic)
+    get_report2(answer_dic, xunfei_dic)
 

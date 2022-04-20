@@ -226,8 +226,38 @@ class RequestApi(object):
         text = text.replace('，', '')
         return text
 
+
+def asrt(FILENAME):
+    import asrt_sdk
+    HOST = '127.0.0.1'
+    PORT = '20001'
+    PROTOCOL = 'http'
+    speech_recognizer = asrt_sdk.get_speech_recognizer(HOST, PORT, PROTOCOL)
+
+    result = speech_recognizer.recognite_file(FILENAME)
+    print(result)
+    print(result.result)
+
+    wave_data = asrt_sdk.read_wav_datas(FILENAME)
+    result = speech_recognizer.recognite_speech(wave_data.str_data,
+                                                wave_data.sample_rate,
+                                                wave_data.channels,
+                                                wave_data.byte_width)
+    print(result)
+    print(result.result)
+
+    result = speech_recognizer.recognite_language(result.result)
+    print(result)
+    print(result.result)
+
+
+
 if __name__ == '__main__':
     api = RequestApi(appid="6d0c56ed", secret_key="4df5aa42d4916b14ed988b7597535542",
-                     upload_file_path=r"./test_temp/曾玉静-msr-2021-04-13T03-05-51-963Zyear.wav")
+                     upload_file_path=r"./test_temp/immediateMemory.wav")
     res = api.all_api_request()
     print('res:',res)
+
+    asrt('./test_temp/immediateMemory.wav')
+
+

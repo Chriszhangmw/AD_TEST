@@ -1,0 +1,407 @@
+a 
+ai 
+an 
+ang 
+ao 
+ba 八八
+bai 
+ban 
+bang 
+bao 
+bei 
+ben 
+beng 
+bi 笔
+bian 
+biao 表表
+bie 
+bin 
+bing 
+bo 
+bu 
+ca 
+cai 
+can 
+cang 
+cao 
+ce 测
+cen 
+ceng 
+cha 
+chai 
+chan 
+chang 
+chao 
+che 
+chen 
+cheng 
+chi 
+chong 重
+chou 
+chu 
+chuai 
+chuan 
+chuang 
+chui 
+chun 春
+chuo 
+ci 
+cong 
+cou 
+cu 
+cuan 
+cui 
+cun 
+cuo 
+da 大
+dai 大
+dan 石
+dang 
+dao 
+de 
+dei 
+deng 
+di 第
+dia 
+dian 
+diao 
+die 
+ding 
+diu 
+dong 冬
+dou 
+du 
+duan 
+dui 
+dun 
+duo 
+e 
+ei 
+en 
+er 二
+fa 
+fan 
+fang 
+fei 
+fen 
+feng 
+fo 
+fou 
+fu 附
+ga 
+gai 
+gan 
+gang 港岗
+gao 
+ge 
+gei 
+gen 
+geng 
+gong 
+gou 
+gu 估估
+gua 
+guai 
+guan 
+guang 
+gui 
+gun 
+guo 国
+ha 
+hai 
+han 
+hang 
+hao 
+he 
+hei 
+hen 
+heng 
+hong 
+hou 
+hu 
+hua 
+huai 
+huan 
+huang 
+hui 
+hun 
+huo 
+ji 期齐
+jia 家家
+jian 检
+jiang 
+jiao 
+jie 
+jin 紧紧
+jing 
+jiong 
+jiu 九九
+ju 
+juan 
+jue 
+jun 
+ka 
+kai 
+kan 
+kang 
+kao 
+ke 科科
+ken 
+keng 
+kong 
+kou 
+ku 
+kua 
+kuai 
+kuan 
+kuang 
+kui 
+kun 
+kuo 
+la 拉拉拉拉
+lai 
+lan 
+lang 
+lao 老老
+le 
+lei 
+leng 
+li 力
+lia 
+lian 
+liang 梁
+liao 
+lie 
+lin 
+ling 零
+liu 六
+lo 
+long 龙
+lou 
+lu 六路
+lv 
+luan 
+lve 
+lun 
+luo 
+m 
+ma 
+mai 
+man 
+mang 
+mao 
+me 
+mei 
+men 
+meng 
+mi 
+mian 
+miao 
+mie 
+min 
+ming 
+miu 
+mo 
+mu 木
+na 
+nai 
+nan 
+nang 
+nao 
+ne 
+nei 
+nen 
+neng 
+ni 
+nian 年
+niang 
+niao 
+nie 
+nin 
+ning 
+niu 
+nong 
+nu 
+nv 
+nuan 
+nue 
+nuo 
+o 
+ou 
+pa 
+pai 
+pan 
+pang 
+pao 
+pei 
+pen 
+peng 
+pi 皮
+pian 
+piao 
+pie 
+pin 
+ping 评
+po 坡
+pou 
+pu 
+qi 期七旗齐
+qia 
+qian 铅
+qiang 
+qiao 
+qie 
+qin 
+qing 庆
+qiong 
+qiu 秋球
+qu 区
+quan 
+que 
+qun 
+ran 
+rang 
+rao 
+re 
+ren 
+reng 
+ri 日
+rong 
+rou 
+ru 
+ruan 
+rui 
+run 
+ruo 
+sa 
+sai 
+san 三
+sang 
+sao 
+se 
+sen 
+seng 
+sha 
+shai 
+shan 
+shang 
+shao 
+she 
+shei 
+shen 
+sheng 绳
+shi 十石室十
+shou 手手
+shu 属树
+shua 
+shuai 
+shuan 
+shuang 
+shui 
+shun 
+shuo 
+si 四
+song 
+sou 
+su 
+suan 
+sui 
+sun 
+suo 
+ta 
+tai 
+tan 
+tang 
+tao 
+te 
+tei 
+teng 
+ti 
+tian 天
+tiao 
+tie 
+ting 
+tong 铜
+tou 
+tu 
+tuan 
+tui 
+tun 
+tuo 
+wa 
+wai 
+wan 
+wang 
+wei 
+wen 
+weng 
+wo 
+wu 五五
+xi 
+xia 夏
+xian 
+xiang 
+xiao 
+xie 协
+xin 心
+xing 星
+xiong 
+xiu 
+xu 
+xuan 
+xue 学
+xun 
+ya 
+yan 铅
+yang 
+yao 
+ye 
+yi 一医一谊谊一一
+yin 
+ying 
+yo 
+yong 
+you 油友友友
+yu 渝
+yuan 袁院
+yue 
+yun 
+za 
+zai 
+zan 
+zang 
+zao 
+ze 
+zei 
+zen 
+zeng 
+zha 
+zhai 
+zhan 
+zhang 
+zhao 
+zhe 
+zhei 
+zhen 
+zheng 
+zhi 
+zhong 中钟中重
+zhou 周
+zhu 属
+zhua 
+zhuai 
+zhuan 
+zhuang 
+zhui 
+zhun 
+zhuo 
+zi 
+zong 
+zou 
+zu 足
+zuan 
+zui 
+zun 
+zuo 
+mou 
+nve 
