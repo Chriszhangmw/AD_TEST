@@ -20,7 +20,7 @@ import json
 # with open('./kedaxunfei.json', 'r', encoding='utf-8') as f:
 #     dic = json.load(f)
 
-with open('./data/lianhe_20211227.json', 'r', encoding='utf-8') as f:
+with open('./dialect_clinical/dialect_clinical_report.json', 'r', encoding='utf-8') as f:
     dic = json.load(f)
 all_cata = ["area","city","compute",
             "day","floor","immediateMemory",
@@ -45,8 +45,8 @@ street_num = 0
 week_num = 0
 year_num = 0
 for k,v in dic.items():
-    if k != "accurcy" and k!= '总共有效question':
-        wrong_cata = v['哪些问题预测错了：']
+    if k != "emsemble accurcy" and k!= '总共有效question' and k!= 'iflytek accurcy':
+        wrong_cata = v['ensemble哪些问题预测错了：']
         wrong_cata_list = wrong_cata.split(' ')
         for cata in wrong_cata_list:
             if cata == "area":

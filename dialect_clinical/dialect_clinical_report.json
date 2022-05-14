@@ -1,0 +1,383 @@
+{
+  "A001": {
+    "ensemble哪些问题预测错了：": "floor street lateMemory",
+    "ensemble预测正确问题个数：": 21,
+    "ensemble预测错误问题个数：": 3,
+    "iflytek哪些问题预测错了：": "city floor street immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 19,
+    "iflytek预测错误问题个数：": 5,
+    "总的问题个数：": 24
+  },
+  "A002": {
+    "ensemble哪些问题预测错了：": "area location compute immediateMemory lateMemory",
+    "ensemble预测正确问题个数：": 19,
+    "ensemble预测错误问题个数：": 5,
+    "iflytek哪些问题预测错了：": "area location compute immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 19,
+    "iflytek预测错误问题个数：": 5,
+    "总的问题个数：": 24
+  },
+  "A003": {
+    "ensemble哪些问题预测错了：": "namePencil week compute compute",
+    "ensemble预测正确问题个数：": 20,
+    "ensemble预测错误问题个数：": 4,
+    "iflytek哪些问题预测错了：": "namePencil week compute compute immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 18,
+    "iflytek预测错误问题个数：": 6,
+    "总的问题个数：": 24
+  },
+  "A004": {
+    "ensemble哪些问题预测错了：": "area street week",
+    "ensemble预测正确问题个数：": 21,
+    "ensemble预测错误问题个数：": 3,
+    "iflytek哪些问题预测错了：": "area city street week immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 18,
+    "iflytek预测错误问题个数：": 6,
+    "总的问题个数：": 24
+  },
+  "A005": {
+    "ensemble哪些问题预测错了：": "floor location immediateMemory",
+    "ensemble预测正确问题个数：": 21,
+    "ensemble预测错误问题个数：": 3,
+    "iflytek哪些问题预测错了：": "area floor location immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 19,
+    "iflytek预测错误问题个数：": 5,
+    "总的问题个数：": 24
+  },
+  "A006": {
+    "ensemble哪些问题预测错了：": "floor repeat week immediateMemory",
+    "ensemble预测正确问题个数：": 20,
+    "ensemble预测错误问题个数：": 4,
+    "iflytek哪些问题预测错了：": "floor repeat week immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 19,
+    "iflytek预测错误问题个数：": 5,
+    "总的问题个数：": 24
+  },
+  "A007": {
+    "ensemble哪些问题预测错了：": "namePencil street week lateMemory",
+    "ensemble预测正确问题个数：": 20,
+    "ensemble预测错误问题个数：": 4,
+    "iflytek哪些问题预测错了：": "namePencil street week lateMemory",
+    "iflytek预测正确问题个数：": 20,
+    "iflytek预测错误问题个数：": 4,
+    "总的问题个数：": 24
+  },
+  "A008": {
+    "ensemble哪些问题预测错了：": "day week immediateMemory lateMemory",
+    "ensemble预测正确问题个数：": 20,
+    "ensemble预测错误问题个数：": 4,
+    "iflytek哪些问题预测错了：": "day week immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 20,
+    "iflytek预测错误问题个数：": 4,
+    "总的问题个数：": 24
+  },
+  "A009": {
+    "ensemble哪些问题预测错了：": "day repeat street immediateMemory lateMemory",
+    "ensemble预测正确问题个数：": 19,
+    "ensemble预测错误问题个数：": 5,
+    "iflytek哪些问题预测错了：": "day repeat street immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 19,
+    "iflytek预测错误问题个数：": 5,
+    "总的问题个数：": 24
+  },
+  "A010": {
+    "ensemble哪些问题预测错了：": "immediateMemory lateMemory lateMemory",
+    "ensemble预测正确问题个数：": 21,
+    "ensemble预测错误问题个数：": 3,
+    "iflytek哪些问题预测错了：": "immediateMemory immediateMemory lateMemory lateMemory",
+    "iflytek预测正确问题个数：": 20,
+    "iflytek预测错误问题个数：": 4,
+    "总的问题个数：": 24
+  },
+  "A011": {
+    "ensemble哪些问题预测错了：": "floor repeat street immediateMemory lateMemory",
+    "ensemble预测正确问题个数：": 19,
+    "ensemble预测错误问题个数：": 5,
+    "iflytek哪些问题预测错了：": "floor repeat street immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 19,
+    "iflytek预测错误问题个数：": 5,
+    "总的问题个数：": 24
+  },
+  "A012": {
+    "ensemble哪些问题预测错了：": "floor namePencil repeat lateMemory lateMemory",
+    "ensemble预测正确问题个数：": 19,
+    "ensemble预测错误问题个数：": 5,
+    "iflytek哪些问题预测错了：": "floor namePencil repeat immediateMemory lateMemory lateMemory",
+    "iflytek预测正确问题个数：": 18,
+    "iflytek预测错误问题个数：": 6,
+    "总的问题个数：": 24
+  },
+  "A013": {
+    "ensemble哪些问题预测错了：": "namePencil immediateMemory lateMemory",
+    "ensemble预测正确问题个数：": 21,
+    "ensemble预测错误问题个数：": 3,
+    "iflytek哪些问题预测错了：": "floor namePencil immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 20,
+    "iflytek预测错误问题个数：": 4,
+    "总的问题个数：": 24
+  },
+  "A014": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 24,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "lateMemory",
+    "iflytek预测正确问题个数：": 23,
+    "iflytek预测错误问题个数：": 1,
+    "总的问题个数：": 24
+  },
+  "emsemble accurcy": 0.9156746031746031,
+  "iflytek accurcy": 0.8908730158730159,
+  "傅仕渝": {
+    "ensemble哪些问题预测错了：": "city",
+    "ensemble预测正确问题个数：": 23,
+    "ensemble预测错误问题个数：": 1,
+    "iflytek哪些问题预测错了：": "city",
+    "iflytek预测正确问题个数：": 23,
+    "iflytek预测错误问题个数：": 1,
+    "总的问题个数：": 24
+  },
+  "冷明宜": {
+    "ensemble哪些问题预测错了：": "location repeat street",
+    "ensemble预测正确问题个数：": 21,
+    "ensemble预测错误问题个数：": 3,
+    "iflytek哪些问题预测错了：": "location repeat street",
+    "iflytek预测正确问题个数：": 21,
+    "iflytek预测错误问题个数：": 3,
+    "总的问题个数：": 24
+  },
+  "卢兴奇": {
+    "ensemble哪些问题预测错了：": "location",
+    "ensemble预测正确问题个数：": 23,
+    "ensemble预测错误问题个数：": 1,
+    "iflytek哪些问题预测错了：": "location",
+    "iflytek预测正确问题个数：": 23,
+    "iflytek预测错误问题个数：": 1,
+    "总的问题个数：": 24
+  },
+  "吕洋1": {
+    "ensemble哪些问题预测错了：": "immediateMemory",
+    "ensemble预测正确问题个数：": 23,
+    "ensemble预测错误问题个数：": 1,
+    "iflytek哪些问题预测错了：": "immediateMemory immediateMemory",
+    "iflytek预测正确问题个数：": 22,
+    "iflytek预测错误问题个数：": 2,
+    "总的问题个数：": 24
+  },
+  "吕洋2": {
+    "ensemble哪些问题预测错了：": "location namePencil repeat",
+    "ensemble预测正确问题个数：": 21,
+    "ensemble预测错误问题个数：": 3,
+    "iflytek哪些问题预测错了：": "location namePencil repeat",
+    "iflytek预测正确问题个数：": 21,
+    "iflytek预测错误问题个数：": 3,
+    "总的问题个数：": 24
+  },
+  "吕洋3": {
+    "ensemble哪些问题预测错了：": "street",
+    "ensemble预测正确问题个数：": 23,
+    "ensemble预测错误问题个数：": 1,
+    "iflytek哪些问题预测错了：": "street lateMemory",
+    "iflytek预测正确问题个数：": 22,
+    "iflytek预测错误问题个数：": 2,
+    "总的问题个数：": 24
+  },
+  "吕洋4": {
+    "ensemble哪些问题预测错了：": "city",
+    "ensemble预测正确问题个数：": 23,
+    "ensemble预测错误问题个数：": 1,
+    "iflytek哪些问题预测错了：": "city immediateMemory",
+    "iflytek预测正确问题个数：": 22,
+    "iflytek预测错误问题个数：": 2,
+    "总的问题个数：": 24
+  },
+  "吕洋5": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 24,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "week",
+    "iflytek预测正确问题个数：": 23,
+    "iflytek预测错误问题个数：": 1,
+    "总的问题个数：": 24
+  },
+  "宋明珍": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 24,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "",
+    "iflytek预测正确问题个数：": 24,
+    "iflytek预测错误问题个数：": 0,
+    "总的问题个数：": 24
+  },
+  "张安治": {
+    "ensemble哪些问题预测错了：": "floor",
+    "ensemble预测正确问题个数：": 23,
+    "ensemble预测错误问题个数：": 1,
+    "iflytek哪些问题预测错了：": "floor",
+    "iflytek预测正确问题个数：": 23,
+    "iflytek预测错误问题个数：": 1,
+    "总的问题个数：": 24
+  },
+  "张正英": {
+    "ensemble哪些问题预测错了：": "city",
+    "ensemble预测正确问题个数：": 23,
+    "ensemble预测错误问题个数：": 1,
+    "iflytek哪些问题预测错了：": "city",
+    "iflytek预测正确问题个数：": 23,
+    "iflytek预测错误问题个数：": 1,
+    "总的问题个数：": 24
+  },
+  "总共有效question": 1008,
+  "曾静玉": {
+    "ensemble哪些问题预测错了：": "area street immediateMemory lateMemory",
+    "ensemble预测正确问题个数：": 20,
+    "ensemble预测错误问题个数：": 4,
+    "iflytek哪些问题预测错了：": "area street immediateMemory immediateMemory immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 18,
+    "iflytek预测错误问题个数：": 6,
+    "总的问题个数：": 24
+  },
+  "李会": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 24,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "",
+    "iflytek预测正确问题个数：": 24,
+    "iflytek预测错误问题个数：": 0,
+    "总的问题个数：": 24
+  },
+  "李春花": {
+    "ensemble哪些问题预测错了：": "repeat immediateMemory lateMemory",
+    "ensemble预测正确问题个数：": 21,
+    "ensemble预测错误问题个数：": 3,
+    "iflytek哪些问题预测错了：": "repeat immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 21,
+    "iflytek预测错误问题个数：": 3,
+    "总的问题个数：": 24
+  },
+  "潘体芳": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 24,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "",
+    "iflytek预测正确问题个数：": 24,
+    "iflytek预测错误问题个数：": 0,
+    "总的问题个数：": 24
+  },
+  "王爱月": {
+    "ensemble哪些问题预测错了：": "repeat",
+    "ensemble预测正确问题个数：": 23,
+    "ensemble预测错误问题个数：": 1,
+    "iflytek哪些问题预测错了：": "repeat",
+    "iflytek预测正确问题个数：": 23,
+    "iflytek预测错误问题个数：": 1,
+    "总的问题个数：": 24
+  },
+  "王立松1": {
+    "ensemble哪些问题预测错了：": "lateMemory",
+    "ensemble预测正确问题个数：": 23,
+    "ensemble预测错误问题个数：": 1,
+    "iflytek哪些问题预测错了：": "lateMemory lateMemory",
+    "iflytek预测正确问题个数：": 22,
+    "iflytek预测错误问题个数：": 2,
+    "总的问题个数：": 24
+  },
+  "王立松2": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 24,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "immediateMemory",
+    "iflytek预测正确问题个数：": 23,
+    "iflytek预测错误问题个数：": 1,
+    "总的问题个数：": 24
+  },
+  "王立松3": {
+    "ensemble哪些问题预测错了：": "city",
+    "ensemble预测正确问题个数：": 23,
+    "ensemble预测错误问题个数：": 1,
+    "iflytek哪些问题预测错了：": "city",
+    "iflytek预测正确问题个数：": 23,
+    "iflytek预测错误问题个数：": 1,
+    "总的问题个数：": 24
+  },
+  "王立松4": {
+    "ensemble哪些问题预测错了：": "location",
+    "ensemble预测正确问题个数：": 23,
+    "ensemble预测错误问题个数：": 1,
+    "iflytek哪些问题预测错了：": "location",
+    "iflytek预测正确问题个数：": 23,
+    "iflytek预测错误问题个数：": 1,
+    "总的问题个数：": 24
+  },
+  "王绍明": {
+    "ensemble哪些问题预测错了：": "floor location immediateMemory lateMemory",
+    "ensemble预测正确问题个数：": 20,
+    "ensemble预测错误问题个数：": 4,
+    "iflytek哪些问题预测错了：": "floor location immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 20,
+    "iflytek预测错误问题个数：": 4,
+    "总的问题个数：": 24
+  },
+  "蒋吉兰": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 24,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "lateMemory",
+    "iflytek预测正确问题个数：": 23,
+    "iflytek预测错误问题个数：": 1,
+    "总的问题个数：": 24
+  },
+  "郝小文": {
+    "ensemble哪些问题预测错了：": "repeat",
+    "ensemble预测正确问题个数：": 23,
+    "ensemble预测错误问题个数：": 1,
+    "iflytek哪些问题预测错了：": "repeat",
+    "iflytek预测正确问题个数：": 23,
+    "iflytek预测错误问题个数：": 1,
+    "总的问题个数：": 24
+  },
+  "陈尔玲": {
+    "ensemble哪些问题预测错了：": "lateMemory",
+    "ensemble预测正确问题个数：": 23,
+    "ensemble预测错误问题个数：": 1,
+    "iflytek哪些问题预测错了：": "immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 22,
+    "iflytek预测错误问题个数：": 2,
+    "总的问题个数：": 24
+  },
+  "陈志容": {
+    "ensemble哪些问题预测错了：": "area lateMemory lateMemory",
+    "ensemble预测正确问题个数：": 21,
+    "ensemble预测错误问题个数：": 3,
+    "iflytek哪些问题预测错了：": "area lateMemory lateMemory",
+    "iflytek预测正确问题个数：": 21,
+    "iflytek预测错误问题个数：": 3,
+    "总的问题个数：": 24
+  },
+  "陈萍": {
+    "ensemble哪些问题预测错了：": "lateMemory",
+    "ensemble预测正确问题个数：": 23,
+    "ensemble预测错误问题个数：": 1,
+    "iflytek哪些问题预测错了：": "lateMemory",
+    "iflytek预测正确问题个数：": 23,
+    "iflytek预测错误问题个数：": 1,
+    "总的问题个数：": 24
+  },
+  "黄兴华": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 24,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "immediateMemory",
+    "iflytek预测正确问题个数：": 23,
+    "iflytek预测错误问题个数：": 1,
+    "总的问题个数：": 24
+  },
+  "黄泽辉": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 24,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "",
+    "iflytek预测正确问题个数：": 24,
+    "iflytek预测错误问题个数：": 0,
+    "总的问题个数：": 24
+  }
+}

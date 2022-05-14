@@ -2,11 +2,64 @@ import platform as plat
 from hmm.model_language.prior_knownledge import shengmu, shengmu_metrix, yunmu_metrix, yunmu
 from pypinyin import lazy_pinyin
 
-class ModelLanguage():  # 语音模型类
-    def __init__(self, modelpath):
+
+import sys
+
+
+def GetSymbolDict(dictfilename):
+    '''
+    读取拼音汉字的字典文件
+    返回读取后的字典
+    '''
+    txt_obj = open(dictfilename, 'r', encoding='UTF-8')  # 打开文件并读入
+    txt_text = txt_obj.read()
+    txt_obj.close()
+    txt_lines = txt_text.split('\n')  # 文本分割
+
+    dic_symbol = {}  # 初始化符号字典
+    for i in txt_lines:
+        list_symbol = []  # 初始化符号列表
+        if (i != ''):
+            # txt_l=i.split('\t')
+            txt_l = i.split(' ')
+            pinyin = txt_l[0]
+            for word in txt_l[1]:
+                list_symbol.append(word)
+        dic_symbol[pinyin] = list_symbol
+
+    return dic_symbol
+
+def GetLanguageModel(modelLanFilename):
+    '''
+    读取语言模型的文件
+    返回读取后的模型
+    '''
+    txt_obj = open(modelLanFilename, 'r', encoding='UTF-8')  # 打开文件并读入
+    txt_text = txt_obj.read()
+    txt_obj.close()
+    txt_lines = txt_text.split('\n')  # 文本分割
+
+    dic_model = {}  # 初始化符号字典
+    for i in txt_lines:
+        if (i != ''):
+            txt_l = i.split('\t')
+            if (len(txt_l) == 1):
+                continue
+            dic_model[txt_l[0]] = txt_l[1]
+
+    return dic_model
+
+
+
+
+class ModelLanguage:  # 语音模型类
+    __slots__ = 'slash','modelpath','dict_pinyin','model1','model2'
+    def __init__(self, modelpath,dict_pinyin,model1,model2):
         self.modelpath = modelpath
         system_type = plat.system()  # 由于不同的系统的文件路径表示不一样，需要进行判断
-
+        self.dict_pinyin = dict_pinyin
+        self.model1 = model1
+        self.model2 = model2
         self.slash = ''
         if (system_type == 'Windows'):
             self.slash = '\\'
@@ -21,10 +74,10 @@ class ModelLanguage():  # 语音模型类
         pass
 
     def LoadModel(self):
-        self.dict_pinyin = self.GetSymbolDict('./hmm/dataset/dict_dialect.txt')
-        self.model1 = self.GetLanguageModel(self.modelpath + 'language_model1.txt')
-        self.model2 = self.GetLanguageModel(self.modelpath + 'language_model2.txt')
-        self.two_gram_pinyin = self.GetPinyin(self.modelpath + 'dic_pinyin.txt')
+        # self.dict_pinyin = self.GetSymbolDict('./hmm/dataset/dict_dialect.txt')
+        # self.model1 = self.GetLanguageModel(self.modelpath + 'language_model1.txt')
+        # self.model2 = self.GetLanguageModel(self.modelpath + 'language_model2.txt')
+        # self.two_gram_pinyin = self.GetPinyin(self.modelpath + 'dic_pinyin.txt')
         model = (self.dict_pinyin, self.model1, self.model2)
         return model
 
@@ -36,22 +89,6 @@ class ModelLanguage():  # 语音模型类
                 res.append(temp_pnyin)
         return res
 
-    def get_possible_syllable_list(self, list_syllables):
-        possible_list_syllables = []
-        for index, syllables in enumerate(list_syllables):
-            if index == 0:  # 代表第一个拼音，就不去匹配是否存在，匹配是否存在是根据两个拼音来的
-                pass
-            else:
-                pass
-
-            if len(syllables) >= 2:  # 先考虑拼音的整体长度大于等于2的情况
-                if syllables[:2] in shengmu_metrix.keys():  # 考虑声母是复合的，比如sh,ch等
-                    shengmu = syllables[:2]
-                    possible_shengmu = shengmu_metrix[shengmu]
-                else:
-                    if syllables[:1] in shengmu_metrix.keys():
-                        shengmu = syllables[:1]
-                        possible_shengmu = shengmu_metrix[shengmu]
 
     def get_possible_syllables(self, syllables):
         possible_list_syllables = []
@@ -60,7 +97,6 @@ class ModelLanguage():  # 语音模型类
             if syllables[:2] in shengmu_metrix.keys():  # 考虑声母是复合的，比如sh,ch等
                 shengmu = syllables[:2]
                 yunmu_ = syllables[2:]
-
                 possible_shengmu = shengmu_metrix[shengmu]
                 for shengmu1 in possible_shengmu:
                     possible_list_syllables.append(shengmu1 + syllables[2:])
@@ -71,7 +107,6 @@ class ModelLanguage():  # 语音模型类
             else:
                 if syllables[:1] in shengmu_metrix.keys():
                     shengmu = syllables[:1]
-
                     possible_shengmu = shengmu_metrix[shengmu]
                     for shengmu2 in possible_shengmu:
                         possible_list_syllables.append(shengmu2 + syllables[1:])
@@ -81,57 +116,20 @@ class ModelLanguage():  # 语音模型类
                         for yunmu1 in possible_yunmu:
                             possible_list_syllables.append(syllables[:1] + yunmu1)
         possible_list_syllables = [s for s in possible_list_syllables if s in self.dict_pinyin.keys()]
+        possible_list_syllables = list(set(possible_list_syllables))
         return possible_list_syllables
 
     def SpeechToText(self, list_syllable):
-        '''
-        语音识别专用的处理函数
-        实现从语音拼音符号到最终文本的转换
-        使用恐慌模式处理一次解码失败的情况
-        '''
-        recall_results = []
-        # possible_syllable_list = self.get_possible_syllable_list(list_syllables)
-        # for list_syllable in possible_syllable_list:
         length = len(list_syllable)
         if (length == 0):  # 传入的参数没有包含任何拼音时
             return ''
-        lst_syllable_remain = []  # 存储剩余的拼音序列
         str_result = ''
 
-        # 存储临时输入拼音序列
-        tmp_list_syllable = list_syllable
-
-        while (len(tmp_list_syllable) > 0):
-            # 进行拼音转汉字解码，存储临时结果
-            tmp_lst_result = self.decode(tmp_list_syllable, 0.0)
-
-            if (len(tmp_lst_result) > 0):  # 有结果，不用恐慌
-                str_result = str_result + tmp_lst_result[0][0]
-
-            while (len(tmp_lst_result) == 0):  # 没结果，开始恐慌
-                # 插入最后一个拼音
-                lst_syllable_remain.insert(0, tmp_list_syllable[-1])
-                # 删除最后一个拼音
-                tmp_list_syllable = tmp_list_syllable[:-1]
-                # 再次进行拼音转汉字解码
-                tmp_lst_result = self.decode(tmp_list_syllable, 0.0)
-
-                if (len(tmp_lst_result) > 0):
-                    # 将得到的结果加入进来
-                    str_result = str_result + tmp_lst_result[0][0]
-
-            # 将剩余的结果补回来
-            tmp_list_syllable = lst_syllable_remain
-            lst_syllable_remain = []  # 清空
-
+        tmp_lst_result = self.decode(list_syllable, 0.0)
+        str_result = str_result + tmp_lst_result[0][0]
         return str_result
 
     def decode(self, list_syllable, yuzhi=0.0001):
-        '''
-        实现拼音向文本的转换
-        基于马尔可夫链
-        '''
-        # assert self.dic_pinyin == null or self.model1 == null or self.model2 == null
         list_words = []
         num_pinyin = len(list_syllable)
         # 开始语音解码
@@ -182,7 +180,7 @@ class ModelLanguage():  # 语音模型类
                     list_words[j] = tmp
 
         return list_words
-        pass
+
 
     def GetSymbolDict(self, dictfilename):
         '''
@@ -243,15 +241,36 @@ class ModelLanguage():  # 语音模型类
         return dic_list
 
 
+
+
+import gc
+
 if (__name__ == '__main__'):
-    ml = ModelLanguage('./hmm/model_language')
-    ml.LoadModel()
+    dict_pinyin = GetSymbolDict('./hmm/dataset/dict_dialect.txt')
+    model1 = GetLanguageModel('./hmm/model_language/language_model1.txt')
+    model2 = GetLanguageModel('./hmm/model_language/language_model2.txt')
+    ml = ModelLanguage('./hmm/model_language',dict_pinyin,model1,model2)
+    # ml.LoadModel()
     # 大家齐心协力拉近神纳
     # str_pinyin = ['da', 'jia', 'ji', 'xin', 'xie', 'li','la','jin','sheng']
     # str_pinyin = ['pi', 'qiao']
-    str_pinyin = lazy_pinyin('重庆呃重庆第一附属医院')
-    r = ml.SpeechToText(str_pinyin)
-    print('语音转文字结果：\n', r)
+    import jieba
+    a = '啤酒、国旗、树木'
+    b = jieba.lcut(a)
+    new = []
+    for w in b:
+        str_pinyin = lazy_pinyin(w)
+        try:
+            r = ml.SpeechToText(str_pinyin)
+
+            gc.collect()
+            new.append(r)
+        # print('语音转文字结果：\n', r)
+        except:
+            new.append(w)
+    print(''.join(new))
+
+
 
 
 

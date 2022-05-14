@@ -1,6 +1,6 @@
 
 import json
-
+import jieba
 import numpy
 from pypinyin import lazy_pinyin
 import matplotlib.pyplot as plt
@@ -30,13 +30,7 @@ def dram_line_comprason(answer_iflytek,answer_ensemble,total_right_questions):
 
 
 
-from hmm_correction import ModelLanguage
 class PinyinSimilarity:
-
-    def __init__(self):
-        self.ml = ModelLanguage('./hmm/model_language')
-        self.ml.LoadModel()
-
 
     def _match_not_continue(self,str_input_pinyin,answer_pinyin):
         match = True
@@ -45,17 +39,33 @@ class PinyinSimilarity:
                 return False
         return match
 
-    def match(self,str_input,answer):
+    def answer_match(self,str_input,answer):
         #答案太长了，解码时间比较慢，建议分词之后去搜索，然后再合并
+        if str_input == "啤酒、国旗、树木":
+            print(22)
         if self.pinyin_similarity(str_input,answer):
             return True
         else:
-            str_pinyin = lazy_pinyin(str_input)
-            try:
-                r = self.ml.SpeechToText(str_pinyin)
-                return self.pinyin_similarity(r,answer)
-            except:
-                return False
+            # if len(str_input) > 4:
+            if len(str_input) > 4:
+                cutted_word = []
+                str_input_list = jieba.lcut(str_input)
+                for word in str_input_list:
+                    word_pinyin = lazy_pinyin(word)
+                    try:
+                        r = self.ml.SpeechToText(word_pinyin)
+                        cutted_word.append(r)
+                    except:
+                        cutted_word.append(word)
+                cutted_word = ''.join(cutted_word)
+                return self.pinyin_similarity(cutted_word, answer)
+            else:
+                str_pinyin = lazy_pinyin(str_input)
+                try:
+                    r = self.ml.SpeechToText(str_pinyin)
+                    return self.pinyin_similarity(r,answer)
+                except:
+                    return False
 
     def pinyin_similarity(self, str_input,answer):
         self.answer_hanzi = answer
@@ -177,12 +187,10 @@ def compute(answer,text2,tool):
     if "||" in answer:  # 一个问题，可能有多个答案的
         textList = answer.split('||')
         for t in textList:
-            # if tool.pinyin_similarity(text2, t): #不加HMM做纠正
-            if tool.match(text2,t):
+            if tool.pinyin_similarity(text2, t): #不加HMM做纠正
                 if_right = True
     else:
-        # if tool.pinyin_similarity(text2, answer):
-        if tool.match(text2, answer):
+        if tool.pinyin_similarity(text2, answer):
             if_right = True
     return if_right
 
@@ -243,34 +251,32 @@ def get_report(dic1,dic2,masr_dic):
         wrong_catalog_ensemble = []  # 集成模型哪些预测错了的
         answer_iflytek_ = 0
         answer_ensemble_ = 0
-        score = v["score"]
-        scores.append(score)
-        bad_wav = v["bad_wav"]
+        # score = v["score"]
+        # scores.append(score)
         wrong_answer = v["wrong_answer"]
-        total_question = 24 - len(bad_wav)
+        total_question = 24
         total_questions.append(total_question)
         all_question += total_question
         for catalog,text in v.items():
             if catalog not in multi_catalog:#先不考虑存在多个答案的情况
-                if catalog not in bad_wav:#保证bad音频里的就不听了，不参与判断
-                    if catalog not in wrong_answer:
-                        if catalog != 'score' and catalog != 'bad_wav' and catalog != 'wrong_answer':
-                            iFlyTek_text = predictions[catalog]
-                            predict_text = predictions[catalog]
-                            predict_text += predictions2[catalog]
-                            if_right = compute(text, predict_text, tool)
-                            if_right_iflytek = compute(text, iFlyTek_text, tool)
-                            if if_right:
-                                if if_right_iflytek is False:
-                                    print(iFlyTek_text,"---->",predictions2[catalog])
-                            if if_right_iflytek:
-                                answer_iflytek_ += 1
-                            else:
-                                wrong_catalog_iflytek.append(catalog)
-                            if if_right:
-                                answer_ensemble_ += 1
-                            else:
-                                wrong_catalog_ensemble.append(catalog)
+                if catalog not in wrong_answer:
+                    if catalog != 'score' and catalog != 'bad_wav' and catalog != 'wrong_answer':
+                        iFlyTek_text = predictions[catalog]
+                        predict_text = predictions[catalog]
+                        predict_text += predictions2[catalog]
+                        if_right = compute(text, predict_text, tool)
+                        if_right_iflytek = compute(text, iFlyTek_text, tool)
+                        if if_right:
+                            if if_right_iflytek is False:
+                                print(iFlyTek_text,"---->",predictions2[catalog])
+                        if if_right_iflytek:
+                            answer_iflytek_ += 1
+                        else:
+                            wrong_catalog_iflytek.append(catalog)
+                        if if_right:
+                            answer_ensemble_ += 1
+                        else:
+                            wrong_catalog_ensemble.append(catalog)
         #开始计算multi_catalog中的三个奇葩
         for catalog, text in v.items():
             if catalog == "compute":
@@ -292,13 +298,6 @@ def get_report(dic1,dic2,masr_dic):
                         answer_ensemble_ += 1
                     else:
                         wrong_catalog_ensemble.append(catalog)
-                if bad_wav.count("compute")>0:
-                    compute_number_bad = bad_wav.count("compute")
-                    wrong_catalog_ensemble,_ = decrease_badlist(compute_number_bad, wrong_catalog_ensemble, "compute")
-                    wrong_catalog_iflytek, _ = decrease_badlist(compute_number_bad, wrong_catalog_iflytek,
-                                                                         "compute")
-                    # answer_iflytek_ += num_right
-                    # answer_ensemble_ += num_right
                 if wrong_answer.count("compute")>0:
                     compute_number_wrong = wrong_answer.count("compute")
                     wrong_catalog_ensemble,num_right1 = decrease_wronglist(compute_number_wrong, wrong_catalog_ensemble, "compute")
@@ -325,13 +324,6 @@ def get_report(dic1,dic2,masr_dic):
                         answer_ensemble_ += 1
                     else:
                         wrong_catalog_ensemble.append(catalog)
-                if bad_wav.count("immediateMemory") > 0:
-                    compute_number_bad = bad_wav.count("immediateMemory")
-                    wrong_catalog_ensemble, num_right = decrease_badlist(compute_number_bad, wrong_catalog_ensemble, "immediateMemory")
-                    wrong_catalog_iflytek, num_right = decrease_badlist(compute_number_bad, wrong_catalog_iflytek,
-                                                                         "immediateMemory")
-                    # answer_iflytek_ += num_right
-                    # answer_ensemble_ += num_right
                 if wrong_answer.count("immediateMemory")>0:
                     compute_number_wrong = wrong_answer.count("immediateMemory")
                     wrong_catalog_ensemble,num_right1 = decrease_wronglist(compute_number_wrong, wrong_catalog_ensemble, "immediateMemory")
@@ -358,13 +350,6 @@ def get_report(dic1,dic2,masr_dic):
                         answer_ensemble_ += 1
                     else:
                         wrong_catalog_ensemble.append(catalog)
-                if bad_wav.count("lateMemory") > 0:
-                    compute_number_bad = bad_wav.count("lateMemory")
-                    wrong_catalog_ensemble, num_right = decrease_badlist(compute_number_bad, wrong_catalog_ensemble, "lateMemory")
-
-                    wrong_catalog_iflytek, num_right = decrease_badlist(compute_number_bad, wrong_catalog_iflytek,
-                                                                         "lateMemory")
-                    # answer_iflytek_ += num_right
                     # answer_ensemble_ += num_right
                 if wrong_answer.count("lateMemory")>0:
                     compute_number_wrong = wrong_answer.count("lateMemory")
@@ -392,12 +377,12 @@ def get_report(dic1,dic2,masr_dic):
     report["emsemble accurcy"] = float(all_right_emsemble / all_question)
     report["iflytek accurcy"] = float(all_right_iflytek/all_question)
     report["总共有效question"] = int(all_question)
-    print(total_questions)
-    print(scores)
-    print(answer_iflytek)
-    print(answer_ensemble)
-    dram_line_comprason(answer_iflytek, answer_ensemble,total_questions)
-    with open('./dialect_clinical/lianhe_20211227.json', 'w', encoding='utf-8') as f:
+    # print(total_questions)
+    # print(scores)
+    # print(answer_iflytek)
+    # print(answer_ensemble)
+    # dram_line_comprason(answer_iflytek, answer_ensemble,total_questions)
+    with open('./dialect_clinical/dialect_clinical_report.json', 'w', encoding='utf-8') as f:
         json.dump(report, f, indent=2, sort_keys=True, ensure_ascii=False)
 
 
@@ -417,10 +402,8 @@ def get_report2(dic1,dic2):
         predict_right_question = 0
         predictions = dic2[k]
         wrong_catalog = []
-        # bad_wav = v["bad_wav"]
-        # wrong_answer = v["wrong_answer"]
         for catalog,text in tqdm(v.items()):
-            print(k,catalog)
+            # print(k,catalog)
             if catalog != 'score' and catalog != 'bad_wav' and catalog != 'wrong_answer':
                 predict_text = predictions[catalog]
                 if ',' in text:#表示一段音频实际对应了多个答案
@@ -433,6 +416,7 @@ def get_report2(dic1,dic2):
                             all_question += 1
                             all_right += 1
                         else:
+                            print(k,catalog, "---->", predict_text)
                             total_question += 1
                             all_question += 1
                             wrong_catalog.append(catalog)
@@ -447,17 +431,11 @@ def get_report2(dic1,dic2):
                         all_question += 1
                         total_question += 1
                         wrong_catalog.append(catalog)
-        bad_wav = v["bad_wav"]
         wrong_answer = v["wrong_answer"]
         for catalog, _ in v.items():
             if catalog == "compute":
                 compute_list = ["compute", "compute", "compute", "compute", "compute"]
                 for c in compute_list:
-                    if c in bad_wav:
-                        if c in wrong_catalog:
-                            wrong_catalog.remove(c)
-                            all_question -= 1
-                            total_question -= 1
                     if c in wrong_answer:
                         if c in wrong_catalog:
                             wrong_catalog.remove(c)
@@ -466,11 +444,6 @@ def get_report2(dic1,dic2):
             elif catalog == "immediateMemory":
                 immediateMemory_list = ["immediateMemory", "immediateMemory", "immediateMemory"]
                 for c in immediateMemory_list:
-                    if c in bad_wav:
-                        if c in wrong_catalog:
-                            wrong_catalog.remove(c)
-                            all_question -= 1
-                            total_question -= 1
                     if c in wrong_answer:
                         if c in wrong_catalog:
                             wrong_catalog.remove(c)
@@ -479,22 +452,12 @@ def get_report2(dic1,dic2):
             elif catalog == "lateMemory":
                 lateMemory_list = ["lateMemory", "lateMemory", "lateMemory"]
                 for c in lateMemory_list:
-                    if c in bad_wav:
-                        if c in wrong_catalog:
-                            wrong_catalog.remove(c)
-                            all_question -= 1
-                            total_question -= 1
                     if c in wrong_answer:
                         if c in wrong_catalog:
                             wrong_catalog.remove(c)
                             predict_right_question += 1
                             all_right += 1
             else:
-                if catalog in bad_wav:
-                    if catalog in wrong_catalog:
-                        wrong_catalog.remove(catalog)
-                        all_question -= 1
-                        total_question -= 1
                 if catalog in wrong_answer:
                     if catalog in wrong_catalog:
                         wrong_catalog.remove(catalog)
@@ -509,19 +472,19 @@ def get_report2(dic1,dic2):
 
     report["accurcy"] = float(all_right/all_question)
     report["总共有效question"] = int(all_question)
-    with open('dialect_normal/report_yuyinzhuanxie_hmm.json', 'w', encoding='utf-8') as f:
+    with open('dialect_clinical/dialect_clinical_baseline.json', 'w', encoding='utf-8') as f:
         json.dump(report, f, indent=2, sort_keys=True, ensure_ascii=False)
 
 if __name__ == "__main__":
     '''
     dialect_clinical
     '''
-    # path = './dialect_clinical/answer_bak.json'
-    # answer_dic = get_dic(path)
-    # masr_dic = get_dic("./dialect_clinical/asr_20121227.json")
-    # xunfei_dic = get_dic("./dialect_clinical/asr_yuyinzhuanxie.json")
-    # get_report(answer_dic, xunfei_dic,masr_dic)
-    # get_report2(answer_dic, xunfei_dic)
+    path = './dialect_clinical/answer_bak.json'
+    answer_dic = get_dic(path)
+    masr_dic = get_dic("./dialect_clinical/dialect_clinical_asr.json")
+    xunfei_dic = get_dic("./dialect_clinical/dialect_clinical_iflytek.json")
+    get_report(answer_dic, xunfei_dic,masr_dic)
+    get_report2(answer_dic, xunfei_dic)
 
     '''
     mandarin_normal
@@ -534,10 +497,10 @@ if __name__ == "__main__":
     '''
     dialect_normal
     '''
-    path = './dialect_normal/answer.json'
-    answer_dic = get_dic(path)
-    # masr_dic = get_dic("./dialect_normal/asr_20121227.json")
-    xunfei_dic = get_dic("./dialect_normal/iflytek.json")
-    # get_report(answer_dic, xunfei_dic, masr_dic)
-    get_report2(answer_dic, xunfei_dic)
+    # path = './dialect_normal/answer.json'
+    # answer_dic = get_dic(path)
+    # # masr_dic = get_dic("./dialect_normal/asr_20121227.json")
+    # xunfei_dic = get_dic("./dialect_normal/iflytek.json")
+    # # get_report(answer_dic, xunfei_dic, masr_dic)
+    # get_report2(answer_dic, xunfei_dic)
 
