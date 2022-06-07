@@ -1,0 +1,410 @@
+{
+  "B001": {
+    "ensemble哪些问题预测错了：": "namePencil week immediateMemory lateMemory",
+    "ensemble预测正确问题个数：": 20,
+    "ensemble预测错误问题个数：": 4,
+    "iflytek哪些问题预测错了：": "namePencil week immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 20,
+    "iflytek预测错误问题个数：": 4,
+    "总的问题个数：": 24
+  },
+  "B002": {
+    "ensemble哪些问题预测错了：": "floor namePencil street week immediateMemory",
+    "ensemble预测正确问题个数：": 19,
+    "ensemble预测错误问题个数：": 5,
+    "iflytek哪些问题预测错了：": "floor namePencil street week immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 18,
+    "iflytek预测错误问题个数：": 6,
+    "总的问题个数：": 24
+  },
+  "B003": {
+    "ensemble哪些问题预测错了：": "street immediateMemory lateMemory",
+    "ensemble预测正确问题个数：": 21,
+    "ensemble预测错误问题个数：": 3,
+    "iflytek哪些问题预测错了：": "street immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 21,
+    "iflytek预测错误问题个数：": 3,
+    "总的问题个数：": 24
+  },
+  "B004": {
+    "ensemble哪些问题预测错了：": "area floor location street week immediateMemory lateMemory",
+    "ensemble预测正确问题个数：": 17,
+    "ensemble预测错误问题个数：": 7,
+    "iflytek哪些问题预测错了：": "area floor location street week immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 17,
+    "iflytek预测错误问题个数：": 7,
+    "总的问题个数：": 24
+  },
+  "B005": {
+    "ensemble哪些问题预测错了：": "namePencil repeat street immediateMemory lateMemory lateMemory",
+    "ensemble预测正确问题个数：": 18,
+    "ensemble预测错误问题个数：": 6,
+    "iflytek哪些问题预测错了：": "namePencil repeat street immediateMemory lateMemory lateMemory",
+    "iflytek预测正确问题个数：": 18,
+    "iflytek预测错误问题个数：": 6,
+    "总的问题个数：": 24
+  },
+  "B006": {
+    "ensemble哪些问题预测错了：": "city namePencil repeat street immediateMemory lateMemory",
+    "ensemble预测正确问题个数：": 18,
+    "ensemble预测错误问题个数：": 6,
+    "iflytek哪些问题预测错了：": "city namePencil repeat street immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 18,
+    "iflytek预测错误问题个数：": 6,
+    "总的问题个数：": 24
+  },
+  "B007": {
+    "ensemble哪些问题预测错了：": "floor season immediateMemory lateMemory",
+    "ensemble预测正确问题个数：": 20,
+    "ensemble预测错误问题个数：": 4,
+    "iflytek哪些问题预测错了：": "floor season immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 20,
+    "iflytek预测错误问题个数：": 4,
+    "总的问题个数：": 24
+  },
+  "B008": {
+    "ensemble哪些问题预测错了：": "repeat",
+    "ensemble预测正确问题个数：": 18,
+    "ensemble预测错误问题个数：": 1,
+    "iflytek哪些问题预测错了：": "repeat",
+    "iflytek预测正确问题个数：": 18,
+    "iflytek预测错误问题个数：": 1,
+    "总的问题个数：": 19
+  },
+  "B009": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 19,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "",
+    "iflytek预测正确问题个数：": 19,
+    "iflytek预测错误问题个数：": 0,
+    "总的问题个数：": 19
+  },
+  "B010": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 19,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "",
+    "iflytek预测正确问题个数：": 19,
+    "iflytek预测错误问题个数：": 0,
+    "总的问题个数：": 19
+  },
+  "B011": {
+    "ensemble哪些问题预测错了：": "repeat",
+    "ensemble预测正确问题个数：": 18,
+    "ensemble预测错误问题个数：": 1,
+    "iflytek哪些问题预测错了：": "repeat",
+    "iflytek预测正确问题个数：": 18,
+    "iflytek预测错误问题个数：": 1,
+    "总的问题个数：": 19
+  },
+  "B012": {
+    "ensemble哪些问题预测错了：": "repeat",
+    "ensemble预测正确问题个数：": 18,
+    "ensemble预测错误问题个数：": 1,
+    "iflytek哪些问题预测错了：": "repeat",
+    "iflytek预测正确问题个数：": 18,
+    "iflytek预测错误问题个数：": 1,
+    "总的问题个数：": 19
+  },
+  "B013": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 19,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "",
+    "iflytek预测正确问题个数：": 19,
+    "iflytek预测错误问题个数：": 0,
+    "总的问题个数：": 19
+  },
+  "B014": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 19,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "",
+    "iflytek预测正确问题个数：": 19,
+    "iflytek预测错误问题个数：": 0,
+    "总的问题个数：": 19
+  },
+  "B015": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 19,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "",
+    "iflytek预测正确问题个数：": 19,
+    "iflytek预测错误问题个数：": 0,
+    "总的问题个数：": 19
+  },
+  "B016": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 19,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "",
+    "iflytek预测正确问题个数：": 19,
+    "iflytek预测错误问题个数：": 0,
+    "总的问题个数：": 19
+  },
+  "B017": {
+    "ensemble哪些问题预测错了：": "street",
+    "ensemble预测正确问题个数：": 18,
+    "ensemble预测错误问题个数：": 1,
+    "iflytek哪些问题预测错了：": "street",
+    "iflytek预测正确问题个数：": 18,
+    "iflytek预测错误问题个数：": 1,
+    "总的问题个数：": 19
+  },
+  "B018": {
+    "ensemble哪些问题预测错了：": "repeat immediateMemory lateMemory",
+    "ensemble预测正确问题个数：": 16,
+    "ensemble预测错误问题个数：": 3,
+    "iflytek哪些问题预测错了：": "repeat immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 16,
+    "iflytek预测错误问题个数：": 3,
+    "总的问题个数：": 19
+  },
+  "B019": {
+    "ensemble哪些问题预测错了：": "repeat street",
+    "ensemble预测正确问题个数：": 17,
+    "ensemble预测错误问题个数：": 2,
+    "iflytek哪些问题预测错了：": "repeat street",
+    "iflytek预测正确问题个数：": 17,
+    "iflytek预测错误问题个数：": 2,
+    "总的问题个数：": 19
+  },
+  "B020": {
+    "ensemble哪些问题预测错了：": "location",
+    "ensemble预测正确问题个数：": 18,
+    "ensemble预测错误问题个数：": 1,
+    "iflytek哪些问题预测错了：": "location",
+    "iflytek预测正确问题个数：": 18,
+    "iflytek预测错误问题个数：": 1,
+    "总的问题个数：": 19
+  },
+  "B021": {
+    "ensemble哪些问题预测错了：": "month week",
+    "ensemble预测正确问题个数：": 17,
+    "ensemble预测错误问题个数：": 2,
+    "iflytek哪些问题预测错了：": "month week immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 15,
+    "iflytek预测错误问题个数：": 4,
+    "总的问题个数：": 19
+  },
+  "B022": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 19,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "",
+    "iflytek预测正确问题个数：": 19,
+    "iflytek预测错误问题个数：": 0,
+    "总的问题个数：": 19
+  },
+  "B023": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 19,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "",
+    "iflytek预测正确问题个数：": 19,
+    "iflytek预测错误问题个数：": 0,
+    "总的问题个数：": 19
+  },
+  "B024": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 19,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "",
+    "iflytek预测正确问题个数：": 19,
+    "iflytek预测错误问题个数：": 0,
+    "总的问题个数：": 19
+  },
+  "B025": {
+    "ensemble哪些问题预测错了：": "repeat",
+    "ensemble预测正确问题个数：": 18,
+    "ensemble预测错误问题个数：": 1,
+    "iflytek哪些问题预测错了：": "repeat",
+    "iflytek预测正确问题个数：": 18,
+    "iflytek预测错误问题个数：": 1,
+    "总的问题个数：": 19
+  },
+  "B026": {
+    "ensemble哪些问题预测错了：": "season",
+    "ensemble预测正确问题个数：": 18,
+    "ensemble预测错误问题个数：": 1,
+    "iflytek哪些问题预测错了：": "season immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 16,
+    "iflytek预测错误问题个数：": 3,
+    "总的问题个数：": 19
+  },
+  "B027": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 19,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "",
+    "iflytek预测正确问题个数：": 19,
+    "iflytek预测错误问题个数：": 0,
+    "总的问题个数：": 19
+  },
+  "B028": {
+    "ensemble哪些问题预测错了：": "repeat",
+    "ensemble预测正确问题个数：": 18,
+    "ensemble预测错误问题个数：": 1,
+    "iflytek哪些问题预测错了：": "repeat",
+    "iflytek预测正确问题个数：": 18,
+    "iflytek预测错误问题个数：": 1,
+    "总的问题个数：": 19
+  },
+  "B029": {
+    "ensemble哪些问题预测错了：": "nameWatch repeat",
+    "ensemble预测正确问题个数：": 17,
+    "ensemble预测错误问题个数：": 2,
+    "iflytek哪些问题预测错了：": "nameWatch repeat",
+    "iflytek预测正确问题个数：": 17,
+    "iflytek预测错误问题个数：": 2,
+    "总的问题个数：": 19
+  },
+  "B030": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 19,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "",
+    "iflytek预测正确问题个数：": 19,
+    "iflytek预测错误问题个数：": 0,
+    "总的问题个数：": 19
+  },
+  "B031": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 19,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "",
+    "iflytek预测正确问题个数：": 19,
+    "iflytek预测错误问题个数：": 0,
+    "总的问题个数：": 19
+  },
+  "B032": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 19,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "",
+    "iflytek预测正确问题个数：": 19,
+    "iflytek预测错误问题个数：": 0,
+    "总的问题个数：": 19
+  },
+  "B033": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 19,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "",
+    "iflytek预测正确问题个数：": 19,
+    "iflytek预测错误问题个数：": 0,
+    "总的问题个数：": 19
+  },
+  "B034": {
+    "ensemble哪些问题预测错了：": "repeat street",
+    "ensemble预测正确问题个数：": 17,
+    "ensemble预测错误问题个数：": 2,
+    "iflytek哪些问题预测错了：": "repeat street",
+    "iflytek预测正确问题个数：": 17,
+    "iflytek预测错误问题个数：": 2,
+    "总的问题个数：": 19
+  },
+  "B035": {
+    "ensemble哪些问题预测错了：": "repeat immediateMemory lateMemory",
+    "ensemble预测正确问题个数：": 16,
+    "ensemble预测错误问题个数：": 3,
+    "iflytek哪些问题预测错了：": "repeat immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 16,
+    "iflytek预测错误问题个数：": 3,
+    "总的问题个数：": 19
+  },
+  "B036": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 19,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "",
+    "iflytek预测正确问题个数：": 19,
+    "iflytek预测错误问题个数：": 0,
+    "总的问题个数：": 19
+  },
+  "B037": {
+    "ensemble哪些问题预测错了：": "area",
+    "ensemble预测正确问题个数：": 18,
+    "ensemble预测错误问题个数：": 1,
+    "iflytek哪些问题预测错了：": "area",
+    "iflytek预测正确问题个数：": 18,
+    "iflytek预测错误问题个数：": 1,
+    "总的问题个数：": 19
+  },
+  "B038": {
+    "ensemble哪些问题预测错了：": "area week",
+    "ensemble预测正确问题个数：": 17,
+    "ensemble预测错误问题个数：": 2,
+    "iflytek哪些问题预测错了：": "area week",
+    "iflytek预测正确问题个数：": 17,
+    "iflytek预测错误问题个数：": 2,
+    "总的问题个数：": 19
+  },
+  "B039": {
+    "ensemble哪些问题预测错了：": "area",
+    "ensemble预测正确问题个数：": 18,
+    "ensemble预测错误问题个数：": 1,
+    "iflytek哪些问题预测错了：": "area",
+    "iflytek预测正确问题个数：": 18,
+    "iflytek预测错误问题个数：": 1,
+    "总的问题个数：": 19
+  },
+  "B040": {
+    "ensemble哪些问题预测错了：": "immediateMemory lateMemory",
+    "ensemble预测正确问题个数：": 17,
+    "ensemble预测错误问题个数：": 2,
+    "iflytek哪些问题预测错了：": "immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 17,
+    "iflytek预测错误问题个数：": 2,
+    "总的问题个数：": 19
+  },
+  "B041": {
+    "ensemble哪些问题预测错了：": "repeat immediateMemory lateMemory",
+    "ensemble预测正确问题个数：": 16,
+    "ensemble预测错误问题个数：": 3,
+    "iflytek哪些问题预测错了：": "repeat immediateMemory lateMemory",
+    "iflytek预测正确问题个数：": 16,
+    "iflytek预测错误问题个数：": 3,
+    "总的问题个数：": 19
+  },
+  "B042": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 19,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "",
+    "iflytek预测正确问题个数：": 19,
+    "iflytek预测错误问题个数：": 0,
+    "总的问题个数：": 19
+  },
+  "B043": {
+    "ensemble哪些问题预测错了：": "area",
+    "ensemble预测正确问题个数：": 18,
+    "ensemble预测错误问题个数：": 1,
+    "iflytek哪些问题预测错了：": "area",
+    "iflytek预测正确问题个数：": 18,
+    "iflytek预测错误问题个数：": 1,
+    "总的问题个数：": 19
+  },
+  "B044": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 19,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "",
+    "iflytek预测正确问题个数：": 19,
+    "iflytek预测错误问题个数：": 0,
+    "总的问题个数：": 19
+  },
+  "B045": {
+    "ensemble哪些问题预测错了：": "",
+    "ensemble预测正确问题个数：": 19,
+    "ensemble预测错误问题个数：": 0,
+    "iflytek哪些问题预测错了：": "",
+    "iflytek预测正确问题个数：": 19,
+    "iflytek预测错误问题个数：": 0,
+    "总的问题个数：": 19
+  },
+  "emsemble accurcy": 0.9247191011235955,
+  "iflytek accurcy": 0.9191011235955057,
+  "总共有效question": 890
+}

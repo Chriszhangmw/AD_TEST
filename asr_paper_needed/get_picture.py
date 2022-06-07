@@ -57,7 +57,7 @@ def displaySpectrum(path): # 显示语音频域谱线
     # plot spectrum，限定[:40000]
     # plt.figure(figsize=(18, 8))
     plt.plot(frequency[:40000], magnitude[:40000])  # magnitude spectrum
-    plt.title("Speech signal frequency domain spectral line")
+    plt.title("Frequency domain spectral line of non-elderlies")
     plt.xlabel("Frequency (Hz)")
     plt.ylabel("Amplitude")
     # plt.savefig("your dir\语音信号频谱图", dpi=600)
@@ -87,15 +87,16 @@ def displaySpectrogram(path):
     # show
     librosa.display.specshow(spectrogram, y_axis='log')
     plt.colorbar(format='%+2.0f dB')
-    plt.title('Non-Elderlies Spectrogram')
+    plt.title('Elderlies Spectrogram')
     plt.xlabel('Duration (seconds)')
     plt.ylabel('Frequency (Hz)')
     plt.show()
 
 
 if __name__ == '__main__':
-    # path = "./A11_0.wav"
-    path = "./test/A11_129.wav"
+    path = "./A11_0.wav"
+    # path = "./test/A11_129.wav"
+    # path = "./test/A319.wav"
     # displayWaveform(path)
-    # displaySpectrum(path)
-    displaySpectrogram(path)
+    displaySpectrum(path)
+    # displaySpectrogram(path)

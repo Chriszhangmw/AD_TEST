@@ -229,9 +229,24 @@ def decrease_wronglist(compute_number_wrong,wrong_catalog,type):
         return wrong_catalog, num1
 
 
+def calculate_total_questions(v):
+    assert isinstance(v,dict)
+    question_num = 0
+    for k,v in v.items():
+        if k == 'wrong_answer':
+            continue
+        if k == 'compute':
+            question_num += 5
+        elif k == 'immediateMemory':
+            question_num += 3
+        elif k == 'lateMemory':
+            question_num += 3
+        else:
+            question_num += 1
+    return question_num
 
 
-def get_report(dic1,dic2,masr_dic):
+def get_report(dic1,dic2,masr_dic,dataname):
     tool = PinyinSimilarity()
     report = {}
     all_question  =0
@@ -254,7 +269,8 @@ def get_report(dic1,dic2,masr_dic):
         # score = v["score"]
         # scores.append(score)
         wrong_answer = v["wrong_answer"]
-        total_question = 24
+        total_question = calculate_total_questions(v) #如果数据完整，这里就直接实24
+        print(total_question)
         total_questions.append(total_question)
         all_question += total_question
         for catalog,text in v.items():
@@ -382,7 +398,8 @@ def get_report(dic1,dic2,masr_dic):
     # print(answer_iflytek)
     # print(answer_ensemble)
     # dram_line_comprason(answer_iflytek, answer_ensemble,total_questions)
-    with open('./dialect_clinical/dialect_clinical_report.json', 'w', encoding='utf-8') as f:
+    res_path = "./" + dataname + "/"+dataname+"_report.json"
+    with open(res_path, 'w', encoding='utf-8') as f:
         json.dump(report, f, indent=2, sort_keys=True, ensure_ascii=False)
 
 
@@ -479,12 +496,12 @@ if __name__ == "__main__":
     '''
     dialect_clinical
     '''
-    path = './dialect_clinical/answer_bak.json'
-    answer_dic = get_dic(path)
-    masr_dic = get_dic("./dialect_clinical/dialect_clinical_asr.json")
-    xunfei_dic = get_dic("./dialect_clinical/dialect_clinical_iflytek.json")
-    get_report(answer_dic, xunfei_dic,masr_dic)
-    get_report2(answer_dic, xunfei_dic)
+    # path = './dialect_clinical/answer_bak.json'
+    # answer_dic = get_dic(path)
+    # masr_dic = get_dic("./dialect_clinical/dialect_clinical_asr.json")
+    # xunfei_dic = get_dic("./dialect_clinical/dialect_clinical_iflytek.json")
+    # get_report(answer_dic, xunfei_dic,masr_dic,'dialect_clinical')
+    # get_report2(answer_dic, xunfei_dic)
 
     '''
     mandarin_normal
@@ -501,6 +518,24 @@ if __name__ == "__main__":
     # answer_dic = get_dic(path)
     # # masr_dic = get_dic("./dialect_normal/asr_20121227.json")
     # xunfei_dic = get_dic("./dialect_normal/iflytek.json")
-    # # get_report(answer_dic, xunfei_dic, masr_dic)
+    # # get_report(answer_dic, xunfei_dic, masr_dic,'dialect_normal')
     # get_report2(answer_dic, xunfei_dic)
+    # '''
+    #     dialect_older
+    # '''
+    # path = './dialect_older/dialect_older.json'
+    # answer_dic = get_dic(path)
+    # masr_dic = get_dic("./dialect_older/dialect_older_asr.json")
+    # xunfei_dic = get_dic("./dialect_older/dialect_older_iflytek.json")
+    # get_report(answer_dic, xunfei_dic, masr_dic,'dialect_older')
+
+    '''
+        mandarin_older
+    '''
+    path = './mandarin_older/mandarin_older.json'
+    answer_dic = get_dic(path)
+    masr_dic = get_dic("./mandarin_older/mandarin_older_asr.json")
+    xunfei_dic = get_dic("./mandarin_older/mandarin_older_iflytek.json")
+    get_report(answer_dic, xunfei_dic, masr_dic,'mandarin_older')
+
 
